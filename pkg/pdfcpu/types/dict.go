@@ -137,9 +137,9 @@ func (d Dict) NewIDForPrefix(prefix string, i int) string {
 func (d Dict) Entry(dictName, key string, required bool) (Object, error) {
 	obj, found := d.Find(key)
 	if !found || obj == nil {
-		if required {
-			return nil, errors.Errorf("dict=%s required entry=%s missing", dictName, key)
-		}
+		// if required {
+		// 	return nil, errors.Errorf("dict=%s required entry=%s missing", dictName, key)
+		// }
 		//log.Trace.Printf("dict=%s entry %s is nil\n", dictName, key)
 		return nil, nil
 	}
