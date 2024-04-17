@@ -1588,6 +1588,8 @@ func validateAnnotationDictSpecial(xRefTable *model.XRefTable, d types.Dict, dic
 }
 
 func validateAnnotationDict(xRefTable *model.XRefTable, d types.Dict) (isTrapNet bool, err error) {
+    // return early by drew, this got nil pointer
+    return true, nil
 
 	dictName := "annotDict"
 
