@@ -1588,9 +1588,6 @@ func validateAnnotationDictSpecial(xRefTable *model.XRefTable, d types.Dict, dic
 }
 
 func validateAnnotationDict(xRefTable *model.XRefTable, d types.Dict) (isTrapNet bool, err error) {
-    // return early by drew, this got nil pointer
-    return true, nil
-
 	dictName := "annotDict"
 
 	subtype, err := validateAnnotationDictGeneral(xRefTable, d, dictName)
@@ -1598,17 +1595,23 @@ func validateAnnotationDict(xRefTable *model.XRefTable, d types.Dict) (isTrapNet
 		return false, err
 	}
 
-	err = validateAnnotationDictConcrete(xRefTable, d, dictName, *subtype)
-	if err != nil {
-		return false, err
-	}
+    if subtype != nil { // lol added by drew
+		err = validateAnnotationDictConcrete(xRefTable, d, dictName, *subtype)
+		if err != nil {
+			return false, err
+		}
+    }
 
 	err = validateAnnotationDictSpecial(xRefTable, d, dictName)
 	if err != nil {
 		return false, err
 	}
 
-	return *subtype == "TrapNet", nil
+    if subtype != nil {
+		return *subtype == "TrapNet", nil
+    } else {
+		return false, nil
+    }
 }
 
 func validatePageAnnotations(xRefTable *model.XRefTable, d types.Dict) error {
